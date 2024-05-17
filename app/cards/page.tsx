@@ -12,11 +12,13 @@ const CardPage = () => {
   const prodTitle = "Product Name";
   const altDescription = "glass image";
   return (
-    <div className="mx-5 h-screen flex flex-wrap items-center justify-between">
+    <div >
       <SelectableItemGrid />
     </div>
   );
 };
+
+// className="mx-5 h-screen flex flex-wrap items-center justify-between"
 
 export default CardPage;
 
