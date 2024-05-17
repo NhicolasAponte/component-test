@@ -3,7 +3,7 @@
 export default function Home() {
   return (
     <main className="h-screen w-full">
-      <div className="bg-gray-100">
+      <div>
         components test
       </div>
     </main>
