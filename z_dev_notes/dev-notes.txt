@@ -1,0 +1,57 @@
+state management 
+useContext 
+create context provider component 
+    - create context type 
+    - createContext<>({}) 
+    - initialize states 
+        - const [object/dataState, functionForUpdatingData] = useState<ObjectType>({initial object shape})
+        ex: const [summaryCard, setSummaryCard] = useState<SummaryCard>({
+        orderName: "",
+        orderSpec: {
+            glassType: "",
+            glassShape: "",
+            glassSize: "",
+            glassThickness: "",
+            glassColor: "",
+        },
+        glassQuantity: 0,
+    });
+
+to use context 
+- deconstruct values from useContext hook in child components 
+- when updating an object with setter function 
+    const { setSummaryCard } = useHelloContext();
+
+    function handleClick(glassType: string) {
+        setSummaryCard((prev) => {
+            return {
+                ...prev,
+                orderSpec: {
+                    ...prev.orderSpec,
+                    glassType: glassType,
+                },
+            };
+        });
+    }
+
+include in provider component a custom hook to create a cleaner call to useContext 
+export function useHelloContext() {
+  return useContext(HelloContext);
+}
+useHelloContext is a custom hook that wraps the call to useContext(HelloContext). 
+This is a common pattern when using context in React, as it allows you to encapsulate the 
+logic for accessing the context value and provides a more convenient API for components to use.
+ Instead of having to import useContext and HelloContext and call useContext(HelloContext) in 
+ every component that needs the context value, components can simply call useHelloContext().
+
+The value returned from useHelloContext() will be whatever value is provided by the nearest 
+HelloContext.Provider up the tree. If there is no HelloContext.Provider, the value will be the 
+defaultValue that was passed to React.createContext(). If no defaultValue was provided, 
+it will be undefined.
+
+Zustand vs Redux
+- zustand can reduce unnecessary rerenders 
+    - simpler to initiate 
+- redux is more complicated but scales well
+    - older so it has a more mature ecosystem 
+https://iambhavya.medium.com/zustand-or-redux-which-one-is-a-better-state-management-library-0a7e70c7b650 
