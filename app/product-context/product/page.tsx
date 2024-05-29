@@ -1,4 +1,4 @@
-import SelectableItemGrid from "@/components/cards/SelectableItemGrid";
+'use client';
 import ButtonGrid from "@/components/general/button-grid";
 
 export default function ProductPage() {

@@ -5,13 +5,13 @@ type HelloContextType = {
     hello: string;
 };
 
-const HelloContext = createContext<HelloContextType>({hello: ""});
+const HelloContext = createContext<any>(undefined);
 
 export default function HelloContextProvider({ children }: Readonly<{ children: React.ReactNode }>) {
-    let [sampleState, setSampleState] = useState<HelloContextType>({hello: "Hello, World!"});
+    let [helloState, setHelloState] = useState<any>("Hello, World!");
 
     return (
-        <HelloContext.Provider value={sampleState}>
+        <HelloContext.Provider value={{ helloState, setHelloState }}>
             {children}
         </HelloContext.Provider>
     );

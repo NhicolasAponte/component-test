@@ -1,3 +1,4 @@
+'use client';
 import { SubmitButtonTest } from "@/actions/generic-actions"
 import { Button } from "@/components/ui/button"
 import {
@@ -7,9 +8,11 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import { useHelloContext } from "../context/HelloContextProvider"
 
 export default function SummaryCard() {
   const orderDescription = `5/16 Laminated Glass\nNote: Some extra instructions`
+  const { helloState } = useHelloContext()
   return (
     <Card className="w-[350px]">
       <CardHeader>
@@ -21,7 +24,7 @@ export default function SummaryCard() {
           <div className="grid w-full items-center gap-4">
             <div className="border p-4 rounded-md">
               <text>
-                {orderDescription}
+                {helloState}
               </text>
             </div>
             <Button>Submit Order</Button>
