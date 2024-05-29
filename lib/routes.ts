@@ -9,7 +9,7 @@ export const CardRoute = {
 }
 
 export const ContextRoute = {
-    href: '/product-context',
+    href: '/product-context/product',
     title: 'Context',
 }
 
