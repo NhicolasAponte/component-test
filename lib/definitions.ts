@@ -1,5 +1,5 @@
 export type SummaryCard = {
-  oderName: string;
+  orderName: string;
   orderSpec: SpecificationString;
   glassQuantity: number;
 };
@@ -17,3 +17,10 @@ export type ProductNavSections =
   | "Shape"
   | "Dimensions"
   | "Glass Color";
+
+export type ProductContextType = {
+    currentSection: ProductNavSections;
+    setCurrentSection: React.Dispatch<React.SetStateAction<ProductNavSections>>;
+    summaryCard: SummaryCard;
+    setSummaryCard: React.Dispatch<React.SetStateAction<SummaryCard>>;
+};
