@@ -1,3 +1,12 @@
+export type Invoice = {
+  customer_id: string;
+  order_name: string;
+  description: string;
+  amount: number;
+  status: string;
+  date: string;
+}
+
 export type SummaryCard = {
   orderName: string;
   orderSpec: SpecificationString;
