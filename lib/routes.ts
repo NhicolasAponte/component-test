@@ -13,7 +13,13 @@ export const ContextRoute = {
     title: 'Context',
 }
 
+export const TanstackTableRoute = {
+    href: '/tables/tanstack-table',
+    title: 'Tanstack Tables',
+}
+
 export const MainNavRoutes = [
     CardRoute,
     ContextRoute,
+    TanstackTableRoute,
 ]

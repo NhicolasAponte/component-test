@@ -1,6 +1,6 @@
 import { Invoice } from "@/lib/definitions";
 
-const invoices: Invoice[] = [
+export const invoices: Invoice[] = [
     {
         customer_id: "1",
         order_name: "Order 1",
