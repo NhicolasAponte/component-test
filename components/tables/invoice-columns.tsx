@@ -1,3 +1,4 @@
+"use client";
 import { Invoice } from "@/lib/definitions";
 import { ColumnDef } from "@tanstack/react-table";
 import React from "react";
@@ -18,36 +19,44 @@ export const invoiceColumns: ColumnDef<Invoice>[] = [
         accessorKey: "order_name",
         header: "Order Name",
         cell: (props) => {
+            return (
             <p>
-                {props.getValue() as React.ReactNode}
+                {props.row.getValue("order_name")}
             </p>
+            )
         }
     },
     {
         accessorKey: "amount",
         header: "Amount",
-        cell: (props) => {
+        cell: ({ row }) => {
+            return (
             <p>
-                {props.getValue() as React.ReactNode}
+                {row.getValue("amount")}
             </p>
+            )
         }
     },
     {
         accessorKey: "status",
         header: "Status",
-        cell: (props) => {
-            <p>
-                {props.getValue() as React.ReactNode}
-            </p>
+        cell: ({ row }) => {
+            return (
+                <p>
+                    {row.getValue("status")}
+                </p>
+                )
         }
     },
     {
         accessorKey: "date",
         header: "Date",
-        cell: (props) => {
-            <p>
-                {props.getValue() as React.ReactNode}
-            </p>
+        cell: ({ row }) => {
+            return (
+                <p>
+                    {row.getValue("date")}
+                </p>
+                )
         }
     },
 ]; 
