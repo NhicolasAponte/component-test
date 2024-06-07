@@ -13,7 +13,10 @@ interface DataTableProps<TData, TValue> {
 }
 
 // this is an exercise to test and experiment with tanstack table and the functions it provides
-export default function TanStackTable<TData, TValue>({ columns, data }: DataTableProps<TData, TValue>) {
+export default function TanStackTable<TData, TValue>({
+  columns,
+  data,
+}: DataTableProps<TData, TValue>) {
   //const [data, setData] = useState(invoices);
 
   //const columns = [...invoiceColumns];
@@ -26,6 +29,7 @@ export default function TanStackTable<TData, TValue>({ columns, data }: DataTabl
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
+    columnResizeMode: "onChange",
   });
 
   return (
@@ -38,15 +42,16 @@ export default function TanStackTable<TData, TValue>({ columns, data }: DataTabl
                 {headerGroup.headers.map((header) => {
                   return (
                     <th key={header.id} className="border p-2">
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
+                      {header.isPlaceholder ? null : (
+                        <div>
+                          {flexRender(
                             header.column.columnDef.header,
                             header.getContext()
                           )}
-                          <div className="absolute h-full w-[5px] cursor-col-resize border">
-
-                          </div>
+                          
+                        </div>
+                      )}
+                      
                     </th>
                   );
                 })}

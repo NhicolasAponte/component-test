@@ -17,7 +17,16 @@ export const invoiceColumns: ColumnDef<Invoice>[] = [
     // }) => unknown)
     {
         accessorKey: "order_name",
-        header: "Order Name",
+        header: ({ header }) => {
+            return (
+                <div className="flex justify-between">
+                    <p>Order Name</p>
+                    <div onMouseDown={header.getResizeHandler()} onTouchStart={header.getResizeHandler()} className="h-[25px] w-1 border-2 rounded-md cursor-col-resize border-black hover:border-blue-500"/>
+                    <div onMouseDown={header.getResizeHandler()} onTouchStart={header.getResizeHandler()} className="h-[25px] w-1 border rounded-md cursor-col-resize bg-blue-500 hover:opacity-100" />
+                </div>
+            )
+        
+        },
         cell: (props) => {
             return (
             <p>
