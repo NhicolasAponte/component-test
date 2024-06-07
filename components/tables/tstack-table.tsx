@@ -17,12 +17,12 @@ export default function TanStackTable<TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
-  //const [data, setData] = useState(invoices);
+  const [tableData, setTableData] = useState(data);
 
   //const columns = [...invoiceColumns];
 
   // console.log(columns)
-  // console.log(data)
+  console.log(data)
   // console.log(invoiceColumns)
 
   const table = useReactTable({
@@ -30,6 +30,16 @@ export default function TanStackTable<TData, TValue>({
     columns,
     getCoreRowModel: getCoreRowModel(),
     columnResizeMode: "onChange",
+    //
+    meta: {
+      updateData: (rowIndex: number, columnId: string, value: string) => setTableData((prev) => {
+        prev.map((row, index) => {
+          if (index === rowIndex) {
+            row[columnId] = value;
+          }
+        })
+      }),
+    },
   });
 
   return (
@@ -41,7 +51,7 @@ export default function TanStackTable<TData, TValue>({
               <tr key={headerGroup.id} className="">
                 {headerGroup.headers.map((header) => {
                   return (
-                    <th key={header.id} className="border p-2">
+                    <th key={header.id} className="border p-2 pr-1">
                       {header.isPlaceholder ? null : (
                         <div>
                           {flexRender(
@@ -65,7 +75,7 @@ export default function TanStackTable<TData, TValue>({
               <tr key={row.id} className="border-b text-center">
                 {row.getVisibleCells().map((cell) => {
                   return (
-                    <td key={cell.id} width={cell.column.getSize()}>
+                    <td key={cell.id} width={cell.column.getSize()} className="p-2">
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()
