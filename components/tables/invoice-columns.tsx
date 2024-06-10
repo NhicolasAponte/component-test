@@ -6,22 +6,28 @@ import EditableCell from "./EditableCell";
 import EditableStatusCell from "./EditableStatusCell";
 
 interface ResizeBarProps {
-    headerLabel: string;
-    isResizing: boolean;
-    getResizeHandler: () => (event: React.MouseEvent | React.TouchEvent) => void;
+  headerLabel: string;
+  isResizing: boolean;
+  getResizeHandler: () => (event: React.MouseEvent | React.TouchEvent) => void;
 }
 
-function ResizeBar({ headerLabel, getResizeHandler, isResizing }: ResizeBarProps) {
-    return (
-        <div className="flex justify-between">
-          <p className="text-center w-full">{headerLabel}</p>
-          <span
-            onMouseDown={getResizeHandler()}
-            onTouchStart={getResizeHandler()}
-            className={`h-[25px] w-1 border-2 rounded-md hover:cursor-col-resize ${isResizing ? "border-blue-500" : "border-slate-400"} hover:border-blue-500`}
-          />
-        </div>
-      );
+function ResizeBar({
+  headerLabel,
+  getResizeHandler,
+  isResizing,
+}: ResizeBarProps) {
+  return (
+    <div className="flex justify-between">
+      <p className="text-center w-full">{headerLabel}</p>
+      <span
+        onMouseDown={getResizeHandler()}
+        onTouchStart={getResizeHandler()}
+        className={`h-[25px] w-1 border-2 rounded-md hover:cursor-col-resize ${
+          isResizing ? "border-blue-500" : "border-slate-400"
+        } hover:border-blue-500`}
+      />
+    </div>
+  );
 }
 
 export const invoiceColumns: ColumnDef<Invoice>[] = [
@@ -46,19 +52,29 @@ export const invoiceColumns: ColumnDef<Invoice>[] = [
           <span
             onMouseDown={header.getResizeHandler()}
             onTouchStart={header.getResizeHandler()}
-            className={`h-[25px] w-1 border-2 rounded-md hover:cursor-col-resize ${header.column.getIsResizing() ? "border-blue-500" : "border-slate-400"}  hover:border-blue-500`}
+            className={`h-[25px] w-1 border-2 rounded-md hover:cursor-col-resize ${
+              header.column.getIsResizing()
+                ? "border-blue-500"
+                : "border-slate-400"
+            }  hover:border-blue-500`}
           />
         </div>
       );
     },
     cell: (props) => {
       return <EditableCell value={props.row.getValue("order_name")} />;
-    },// onChange={(value) => props.row.setValue("order_name", value)}
+    }, // onChange={(value) => props.row.setValue("order_name", value)}
   },
   {
     accessorKey: "amount",
     header: ({ header }) => {
-        return <ResizeBar headerLabel="Amount" getResizeHandler={header.getResizeHandler} isResizing={header.column.getIsResizing()} />;
+      return (
+        <ResizeBar
+          headerLabel="Amount"
+          getResizeHandler={header.getResizeHandler}
+          isResizing={header.column.getIsResizing()}
+        />
+      );
     },
     cell: ({ row }) => {
       return <p>{row.getValue("amount")}</p>;
@@ -67,15 +83,44 @@ export const invoiceColumns: ColumnDef<Invoice>[] = [
   {
     accessorKey: "status",
     header: ({ header }) => {
-        return <ResizeBar headerLabel="Status" getResizeHandler={header.getResizeHandler} isResizing={header.column.getIsResizing()} />;
+      return (
+        <ResizeBar
+          headerLabel="Status"
+          getResizeHandler={header.getResizeHandler}
+          isResizing={header.column.getIsResizing()}
+        />
+      );
     },
-    // alternate way to invoke a component
-    cell: EditableStatusCell,
+    // alternate way to invoke a component, though it causes an error:
+    //     Type '({ getValue, row, column, table }: EditableStatusCellProps) => JSX.Element' is not assignable to type 'ColumnDefTemplate<CellContext<Invoice, unknown>> | undefined'.
+    //   Type '({ getValue, row, column, table }: EditableStatusCellProps) => JSX.Element' is not assignable to type '(props: CellContext<Invoice, unknown>) => any'.
+    //     Types of parameters '__0' and 'props' are incompatible.
+    //       Type 'CellContext<Invoice, unknown>' is not assignable to type 'EditableStatusCellProps'.
+    //         The types returned by 'getValue()' are incompatible between these types.
+    //           Type 'unknown' is not assignable to type 'string'.ts(2322)
+    // types.d.ts(85, 5): The expected type comes from property 'cell' which is declared here on type 'ColumnDef<Invoice>'
+    cell: ({ row, column, table }) => {
+      //  updateData={table.options.meta?.updateData} tried passing the function, still get an error: need to define the function in the cell prop somehow
+      return (
+        <EditableStatusCell
+          getValue={() => row.getValue("status")}
+          row={row}
+          column={column}
+          table={table}
+        />
+      );
+    },
   },
   {
     accessorKey: "date",
     header: ({ header }) => {
-        return <ResizeBar headerLabel="Date" getResizeHandler={header.getResizeHandler}  isResizing={header.column.getIsResizing()} />;
+      return (
+        <ResizeBar
+          headerLabel="Date"
+          getResizeHandler={header.getResizeHandler}
+          isResizing={header.column.getIsResizing()}
+        />
+      );
     },
     cell: ({ row }) => {
       return <p>{row.getValue("date")}</p>;

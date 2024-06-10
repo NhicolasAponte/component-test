@@ -3,10 +3,16 @@ import {
   ColumnDef,
   flexRender,
   getCoreRowModel,
+  TableMeta,
   useReactTable,
 } from "@tanstack/react-table";
 import { useState } from "react";
 
+
+interface NewTableMeta<TData> extends TableMeta<TData> {
+  updateData: (rowIndex: number, columnId: string, value: string) => void;
+
+}
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
@@ -22,22 +28,23 @@ export default function TanStackTable<TData, TValue>({
   //const columns = [...invoiceColumns];
 
   // console.log(columns)
-  console.log(data)
+  //console.log(data)
   // console.log(invoiceColumns)
+  console.log(tableData)
 
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
     columnResizeMode: "onChange",
-    //
+    // the following objects should yield the same result, but we'll arbitrarily spread the original object instead of: { ...row, [columnId]: value } 
     meta: {
-      updateData: (rowIndex: number, columnId: string, value: string) => setTableData((prev) => {
-        prev.map((row, index) => {
-          if (index === rowIndex) {
-            row[columnId] = value;
-          }
-        })
+      updateData: (rowIndex: number, columnId: string, value: string) => 
+        setTableData((prev) => {
+        return prev.map((row, index) => 
+          index === rowIndex ? 
+          { ...prev[rowIndex], [columnId]: value } : row
+        )
       }),
     },
   });

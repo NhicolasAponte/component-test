@@ -5,7 +5,7 @@ interface EditableCellProps {
     value: string;
     onChange?: (value: string) => void;
 }
-
+// NOTE TODO: add a onBlur event to update the table state
 export default function EditableCell({ value }: EditableCellProps) {
     const [cellValue, setCellValue] = useState(value);
 
