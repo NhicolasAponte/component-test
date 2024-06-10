@@ -4,6 +4,8 @@ import { ColumnDef } from "@tanstack/react-table";
 import React from "react";
 import EditableCell from "./EditableCell";
 import EditableStatusCell from "./EditableStatusCell";
+import { Button } from "../ui/button";
+import { ChevronDown } from 'lucide-react';
 
 interface ResizeBarProps {
   headerLabel: string;
@@ -43,6 +45,21 @@ export const invoiceColumns: ColumnDef<Invoice>[] = [
   //  renderValue: () => any
   // }) => unknown)
   // <div onMouseDown={header.getResizeHandler()} onTouchStart={header.getResizeHandler()} className="w-1 border rounded-md top-0 right-0 cursor-col-resize bg-blue-500 hover:opacity-100" />
+  {
+    id: "expander",
+    cell: ({ row }) => {
+        return (
+            row.getCanExpand() ? 
+            (
+                <Button onClick={row.getToggleExpandedHandler()}>
+                    <ChevronDown />
+                </Button>
+            )
+            : null
+            
+        );
+    },
+  },
   {
     accessorKey: "order_name",
     header: ({ header }) => {

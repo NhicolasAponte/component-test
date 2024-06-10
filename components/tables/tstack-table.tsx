@@ -3,6 +3,7 @@ import {
   ColumnDef,
   flexRender,
   getCoreRowModel,
+  getFilteredRowModel,
   TableMeta,
   useReactTable,
 } from "@tanstack/react-table";
@@ -24,6 +25,7 @@ export default function TanStackTable<TData, TValue>({
   data,
 }: DataTableProps<TData, TValue>) {
   const [tableData, setTableData] = useState(data);
+  const [filtering, setFiltering] = useState<string>();
 
   //const columns = [...invoiceColumns];
 
@@ -37,6 +39,7 @@ export default function TanStackTable<TData, TValue>({
     columns,
     getCoreRowModel: getCoreRowModel(),
     columnResizeMode: "onChange",
+    getFilteredRowModel: getFilteredRowModel(),
     // the following objects should yield the same result, but we'll arbitrarily spread the original object instead of: { ...row, [columnId]: value } 
     meta: {
       updateData: (rowIndex: number, columnId: string, value: string) => 
@@ -47,10 +50,27 @@ export default function TanStackTable<TData, TValue>({
         )
       }),
     },
+    // only set values in initial state or state, not both
+    // any values that appear in both, will be overwritten by whatever is in state
+    state: {
+      columnVisibility: {
+        //date: false,
+      },
+      globalFilter: filtering,
+    },
+    onGlobalFilterChange: setFiltering,
+    getRowCanExpand: () => true,
   });
 
   return (
     <div className="">
+      <input 
+        type="text" 
+        className="border rounded-md p-2 mb-2" 
+        placeholder="Search ..."
+        //onChange={(e) => table.setGlobalFilter(e.target.value)}
+        onChange={(e) => setFiltering(e.target.value)}  
+      />
       <table className="" width={table.getTotalSize()}>
         <thead className="">
           {table.getHeaderGroups().map((headerGroup) => {
@@ -79,6 +99,7 @@ export default function TanStackTable<TData, TValue>({
         <tbody className="border">
           {table.getRowModel().rows.map((row) => {
             return (
+              <>
               <tr key={row.id} className="border-b text-center">
                 {row.getVisibleCells().map((cell) => {
                   return (
@@ -91,7 +112,17 @@ export default function TanStackTable<TData, TValue>({
                   );
                 })}
               </tr>
+              {row.getIsExpanded() && (
+                <tr>
+                  <td colSpan={table.getVisibleCells().length}>
+                    <div className="p-2">
+                      <p className="text-center">Expanded Content</p>
+                    </div>
+                  </td>
+                </tr>
+              )}
             );
+            </>
           })}
         </tbody>
       </table>
