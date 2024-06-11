@@ -49,14 +49,12 @@ export const invoiceColumns: ColumnDef<Invoice>[] = [
     id: "expander",
     cell: ({ row }) => {
         return (
-            row.getCanExpand() ? 
+            row.getCanExpand() && 
             (
                 <Button onClick={row.getToggleExpandedHandler()}>
                     <ChevronDown />
                 </Button>
-            )
-            : null
-            
+            )  
         );
     },
   },

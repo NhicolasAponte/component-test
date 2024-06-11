@@ -4,7 +4,7 @@ export const invoices: Invoice[] = [
     {
         customer_id: "1",
         order_name: "Order 1",
-        description: "Description 1",
+        description: "Description 1: some multiline product description here.",
         amount: 132,
         status: "Pending",
         date: "2021-01-01",

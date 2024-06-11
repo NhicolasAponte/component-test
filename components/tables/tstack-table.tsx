@@ -1,4 +1,5 @@
 "use client";
+import { Invoice } from "@/lib/definitions";
 import {
   ColumnDef,
   flexRender,
@@ -9,11 +10,19 @@ import {
 } from "@tanstack/react-table";
 import { useState } from "react";
 
-
-interface NewTableMeta<TData> extends TableMeta<TData> {
-  updateData: (rowIndex: number, columnId: string, value: string) => void;
-
+interface RowDetailProps<TData> {
+  invoice: TData;
 }
+
+function RowDetail<TData>({ invoice }: RowDetailProps<TData>) {
+  const { description } = invoice as Invoice;
+  return (
+    <div className="p-2">
+      <p>{description}</p>
+    </div>
+  );
+}
+
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
@@ -35,7 +44,7 @@ export default function TanStackTable<TData, TValue>({
   console.log(tableData)
 
   const table = useReactTable({
-    data,
+    data,//should this be tableData?
     columns,
     getCoreRowModel: getCoreRowModel(),
     columnResizeMode: "onChange",
@@ -114,15 +123,13 @@ export default function TanStackTable<TData, TValue>({
               </tr>
               {row.getIsExpanded() && (
                 <tr>
-                  <td colSpan={table.getVisibleCells().length}>
-                    <div className="p-2">
-                      <p className="text-center">Expanded Content</p>
-                    </div>
+                  <td colSpan={row.getVisibleCells().length}>
+                    <RowDetail invoice={row.original}/>
                   </td>
                 </tr>
               )}
-            );
             </>
+            );
           })}
         </tbody>
       </table>
