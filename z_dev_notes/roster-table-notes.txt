@@ -1,0 +1,35 @@
+// bashrc alias: alias roster='cd ~/Desktop/dev/NextJS-Proj/roster-table'
+
+initialize project 
+npx create-next-app@latest
+    - clean out default NextJS content
+    - put todo items in ReadMe 
+    - push initial commit 
+
+create route 
+    app/roster 
+    - page.tsx 
+    - data-table.tsx
+    - columns.tsx 
+
+create routes.ts file 
+    lib/routes.ts 
+    - export const RosterRoute = {} 
+    - export const MainNavRoutes = [ RosterRoute ]; 
+
+
+
+initialize shadcn 
+npx shadcn@latest init
+    - style: New York 
+    - base color: zinc 
+    - css vars for theming: yes 
+    - using react 19 => use --legacy-peer-deps 
+
+npx shadcn@latest add table
+
+npm install @tanstack/react-table
+    - if you get a dependency error because of react 19
+    then run with --legacy-peer-deps flag 
+    - npm install @tanstack/react-table --legacy-peer-deps
+
