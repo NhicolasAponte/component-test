@@ -18,8 +18,14 @@ export const TanstackTableRoute = {
     title: 'Tanstack Tables',
 }
 
+export const EmployeeTableRoute = {
+    href: '/tables/employee-table',
+    title: 'Employee Table',
+}
+
 export const MainNavRoutes = [
     CardRoute,
     ContextRoute,
     TanstackTableRoute,
+    EmployeeTableRoute,
 ]
