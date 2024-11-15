@@ -33,3 +33,16 @@ npm install @tanstack/react-table
     then run with --legacy-peer-deps flag 
     - npm install @tanstack/react-table --legacy-peer-deps
 
+write column component 
+    - start with basic columns: accessorKey and header for each visible property 
+    - add shadcn button component for headers 
+        npx shadcn@latest add button 
+    - add arrow updown icon to header for sortable columns 
+write data-table component 
+    - start with basic table 
+    - add filtering and sorting 
+        - global search function 
+            - install match-sorter-utility from tanstack 
+                npm i @tanstack/match-sorter-utils --legacy-peer-deps 
+        - generate Input component from shadcn 
+            npx shadcn@latest add input 
