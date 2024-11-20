@@ -43,6 +43,10 @@ export default function TanStackTable<TData, TValue>({
   // console.log(invoiceColumns)
   console.log(tableData)
 
+  interface TableMeta {
+    updateData: (rowIndex: number, columnId: string, value: string) => void;
+  }
+
   const table = useReactTable({
     data,//should this be tableData?
     columns,
@@ -58,7 +62,7 @@ export default function TanStackTable<TData, TValue>({
           { ...prev[rowIndex], [columnId]: value } : row
         )
       }),
-    },
+    } as TableMeta,
     // only set values in initial state or state, not both
     // any values that appear in both, will be overwritten by whatever is in state
     state: {
