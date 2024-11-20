@@ -46,3 +46,11 @@ write data-table component
                 npm i @tanstack/match-sorter-utils --legacy-peer-deps 
         - generate Input component from shadcn 
             npx shadcn@latest add input 
+
+create editable cell 
+    - create editable-cell component 
+    - invoke it in column component cell property 
+    - add state handling for clicking, editing, onBlur, and onKeyDown for "Enter" key 
+
+install zod 
+    npm install zod --legacy-peer-deps 
